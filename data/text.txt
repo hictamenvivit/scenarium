@@ -1,0 +1,259 @@
+§scene1
+ext|jour|une rue
+
+§dd
+dans la rue, €P1 marche. Elle a l'air très contente. Tout à coup, elle est heurtée par un homme, €P2. 
+
+§P1
+Non mais oh ! vous pourriez faire attention non?
+
+§P2
+Ouais bon ça va j'ai pas fait exprès c'est bon
+
+§P1
+Aucun respect putain
+
+§dd
+€P1 continue à marcher dans la rue. Malgré l'altercation, on se rend compte qu'elle regagne peu à peu sa bonne humeur du début
+Tout à coup elle s'arrête, fouille dans ses poches à la recherche de son portefeuille. Elle regarde en arrière
+
+§P1
+Putain quelle conne!
+
+§dd
+Elle réfléchit puis sort son téléphone
+
+§P1
+Oui allo, c'est €nomcomplet_P1 à l'appareil. Je voudrais faire opposition, on vient de me voler ma carte bleue
+
+§scene2
+int|soir|un appartement ou se trouvent plusieurs amis de €P1 et €P3, son copain/mari
+
+§dd
+€P1 parle tout en apportant un plat à table
+
+§P1[d'un ton enjoué et un peu sarcastique]
+Du coup il m'a tout pris ce con, carte d'étudiante, navigo, carte bleue, bref. Ca va être un bordel pour tout refaire... Heureusement il n'y avait pas mon passeport
+
+§un ami de €P1
+Et ça va t'as pas eu trop peur?
+
+§P1
+Non mais tu sais que comme une conne, j'ai mis 5 minutes avant de m'en rendre compte, au début je pensais qu'il m'avait juste bousculée
+
+§P3
+C'est peut-être mieux comme ça, t'aurais été capable de lui courir après
+
+§P1
+Ben oui et alors?
+
+§P3
+On sait jamais ce qui peut arriver
+
+§P1
+A €Ville à 16h ? Faut pas exagérer!
+
+§une amie de €P1
+Et t'as pensé à faire opposition au fait?
+
+§P1
+Oui, bien sûr, dès que je m'en suis rendue compte... Bon allez! On parle d'autre chose, hein? Comment ça se passe ton stage?
+
+§Un ami de €P1
+Oh m'en parle pas ! (Figure toi ...)
+
+§scene3
+int|nuit|chambre de €P1
+
+§dd
+€P1 et €P3 dans leur lit. €P3 lit un journal
+
+§P1
+Oh merde
+
+§P3
+Quoi?
+
+§P1
+Je viens de me souvenir qu'il y avait autre chose dans mon portefeuille!
+
+§P3
+Un truc important ?
+
+§P1
+Non, pas du tout
+
+§scene4
+int|jour|un bureau de tabac
+
+§P1
+Bonjour monsieur, je voudrais une grille de loto svp
+
+§buraliste
+Oui madame, un flash?
+
+§P1
+Euh... qu'est-ce que c'est ?
+
+§buraliste
+C'est la machine qui choisit les numéros au hasard. Sinon vous pouvez remplir une grille
+
+§P1
+Ah ! non non un flash c'est très bien
+
+§buraliste
+D'accord. Voilà, 2 euros s'il vous plait. Merci. Bonne journée madame, au revoir!
+
+§P1
+Bonne journée !
+
+§dd
+€P1 glisse le bulletin dans son portefeuille
+
+§scene5
+int|nuit|chambre à coucher
+
+§P3
+Tu joues au loto toi?
+
+§P1
+Mais non c'était la première fois en plus. C'est juste que j'avais eu l'impression d'avoir de la chance aujourd'hui, je sais même plus pourquoi, du coup je me suis dit que j'allais jouer au loto, c'est complètement con
+
+§P3
+C'est un peu con, oui
+
+§dd
+elle lui fait un doigt d'honneur sans se retourner, il embrasse le doigt. Elle rit un peu
+
+§P3
+Je peux éteindre?
+
+§P1
+oui vas-y je suis crevée aussi
+
+§dd
+€P3 éteint la lumière. On l'entend se retourner sous la couverture. Après quelques secondes de silence, il rallume la lumière. On voit que €P1 est toujours assise et qu'elle regarde dans le vide.
+
+§P3
+Tu sais que les chances de gagner au loto sont très faibles hein? 
+
+§P1
+oui ..
+
+§dd
+€P3 va se retourner dans son lit. Puis, avant d'éteindre, se retourne à nouveau
+
+§P3
+Très très faibles, pratiquement aucune chance
+
+§P1
+oui oui!
+
+§dd
+€P3 se recouche et éteint la lumière
+
+§scene6
+ext|jour|un rève de €P1
+
+§dd
+A la campagne. €P1 porte une robe enfantine et des couettes. Elle joue avec un chien. On entend au loin une musique "techno" assez faible. Le chien et €P1 se retournent l'air intrigués. Tout à coup la musique est beaucoup plus forte et €P2 surgit dans une voiture décapotable, et écrase le chien. Il porte un manteau en fourrure, des grosses lunettes noires et un cigare. Il regarde €P1 et lui jette des billets de banque en riant, avant de repartir avec sa voiture. Puis on entend un bruit de voiture cassée accompagnée d'une alarme, qui devient l'alarme du réveil
+
+§scene7
+int|jour|chambre de €P1
+
+§dd
+€P1 éteint le réveil et se lève en soupirant
+
+
+§scene8
+int|jour|une salle de classe dans une école de commerce, 
+
+§dd
+€professeur parle 
+
+§dd
+Avant d'entrer, €P1 regarde sa montre et soupire, elle est en retard. Elle entre, tout les étudiants dorment. Elle va s'asseoir à sa place et sort un oreiller de son sac.
+
+§ellipse
+La même salle de classe quelques minutes plus tard
+
+§professeur
+Et c'est pourquoi ce qui est fondamental dans une bonne stratégie d'entreprise, c'est d'être toujours dans l'inattendu, dans le disruptif. Car si vous ne parvenez pas à faire entrer votre groupe dans la révolution digitale, vous risquez de n'attirer que des profils 1.0.... €P1? vous n'arrivez pas à dormir? 
+
+§P1
+Non, excusez-moi, je suis un peu perturbée
+
+§dd
+des étudiants ouvrent un œil et bougonnent
+
+§professeur
+bon, allez faire un tour, hein. Vous voyez bien que vous dérangez vos camarades. Je disais donc
+
+§dd
+€P1 prend ses affaires et s'en va pendant que €professeur continue
+
+§scene9
+ext|jour|une rue
+
+§dd
+dans la rue, €P1 passe devant un bureau de tabac avec un panneau indiquant les montants du loto et euromillion. Elle lui donne un coup de pied.
+
+§buraliste2[sort de son bureau]
+Non mais ça va pas !
+
+§dd
+Il sort, €P1 s'enfuit. En courant elle finit par bousculer €P2 dans la rue.
+
+§P2
+Eh! Vous pourriez faire attention ! Aucun respect putain!
+
+§P1[perdue]
+Oui bon ça va j'ai pas fait exprès, désolée
+
+§P2
+Bon ça va c'est pas la mort (un temps) eh mais on se connait, non?
+
+§P1
+Oh putain c'est toi!
+
+§P2
+Quoi c'est moi ? Non, je sais que j'ressemble à Pascal le grand frère mais c'est pas moi
+
+§P1
+C'est toi qui m'as piqué mon loto!
+
+§P2
+Hein?
+
+§P1
+L'autre jour, tu m'as bousculé et tu m'as piqué mon portefeuille
+
+§P2
+Ah mais ouais je savais bien qu'on s'était déjà vus! Bon ben désolé il est dans la Seine ton portefeuille 
+
+§P1
+Et le loto?
+
+§P2
+Ben j'ai pris les gains aussi du coup. J'tai tiré ton portefeuille en fait, je sais pas si t'as remarqué. Du coup j'ai pris tes 30 euros de cash aussi.
+
+§P1
+(exaspérée) T'as pris mes gains ! Salaud! 
+
+§P2
+Oui bon c'est 2 euros après
+
+§P1
+Combien t'as dit?
+
+§P2
+2 ou 3 euros je sais plus
+
+§P1
+(éclate de rire) Quoi c'est tout!
+
+§P2
+Franchement c'est pas mal, d'habitude on gagne que dalle
+
+§dd
+elle éclate de rire, €P2 est assez géné. Elle part en riant, GP sur €P2 perplexe. Puis il semble passer à autre chose et allume un pétard.
