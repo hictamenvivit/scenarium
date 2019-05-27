@@ -49,9 +49,16 @@ class Parler(Commande2):
         super().__init__('speak', texte, parlant)
         
 class Slug(Commande):
+    incr = 0
     def __init__(self, interieur, lieu, heure):
         nom = 'intslug' if interieur else 'extslug'
         super().__init__(nom, lieu, heure)
+        Slug.incr += 1
+
+    def rep(self):
+        return "{}\n{}".format(
+            "{0:0=3d}".format(self.incr),
+            super().rep())
         
 class Simple():
     def __init__(self, texte):

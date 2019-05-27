@@ -24,7 +24,7 @@ def test_parler():
     
 def test_slug():
     slug = Slug(True, 'Jardin', 'jour')
-    assert slug.rep() == '\intslug[jour]{Jardin}'
+    assert slug.rep() == '001\n\intslug[jour]{Jardin}'
     
 def test_ocmmande_instanciation():
     string = """§bonjour
@@ -32,8 +32,8 @@ comment allez-vous?"""
     oc = OCommande(string)
     assert oc.keyword == "bonjour"
     
-def test_instanciate_odocument():
-    od = Document('data/text.txt', 'essai', dict())
+# def test_instanciate_odocument():
+#     od = Document('data/text.txt', 'essai', dict())
     
     
     
@@ -43,7 +43,7 @@ bonjour""","\speak{P3}{bonjour}"),
     ("""§dd
 elle rentre""", "elle rentre"),
     ("""§scene1
-ext|jour|une rue""","\extslug[jour]{une rue}" )
+ext|jour|une rue""","002\n\extslug[jour]{une rue}" )
 ])
 def test_from_old_to_new(input, output):
     truc = OCommande(input).corresponding_new_command
