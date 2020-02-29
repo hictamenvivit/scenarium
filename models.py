@@ -1,5 +1,8 @@
 
 
+from googletrans import Translator
+t = Translator()
+
 class Titre:
     debut = """\\documentclass{screenplay}
 \\usepackage[utf8]{inputenc}
@@ -49,15 +52,16 @@ class Parler(Commande2):
         super().__init__('speak', texte, parlant)
         
 class Slug(Commande):
-    incr = 0
+    incr = 1
     def __init__(self, interieur, lieu, heure):
+        self.number = Slug.incr
         nom = 'intslug' if interieur else 'extslug'
         super().__init__(nom, lieu, heure)
         Slug.incr += 1
 
     def rep(self):
         return "{}\n{}".format(
-            "{0:0=3d}".format(self.incr),
+            "{0:0=3d}".format(self.number),
             super().rep())
         
 class Simple():
@@ -94,6 +98,7 @@ class OCommande:
         
     @property
     def corresponding_new_command(self):
+
         if self.type == "dialogue":
             return Parler(parlant=self.keyword, texte=self.content)
         if self.type == "dd":
@@ -106,23 +111,39 @@ class OCommande:
             heure, lieu = b,c
             return Slug(interieur=int, lieu=lieu, heure=heure)
             
+    def translate(self):
+        self.content = t.translate(self.content, src="fr", dest="en").text
+            
         
 
 class Document:
-    def __init__(self, filepath, my_title, dico):
+    def __init__(self, filepath, my_title, dico, translate=False):
         with open(filepath, 'r') as file:
             content = file.read()
             for key, value in dico.items():
                 content = content.replace(key, value)
             commands_text = [i.strip() for i in content.split('\n\n')]
             o_commands = [OCommande(ct) for ct in commands_text]
+            if translate:
+                print("Translating...")
+                _ = [i.translate() for i in o_commands]
+                print("Done")
             new_commands = [Titre(my_title)] + [i.corresponding_new_command for i in o_commands] + [End()]
             reps = [i.rep() for i in new_commands]
             self.file_content = '\n\n'.join(reps)
             
     def save(self, path):
         if '€' in self.file_content:
-            raise AttributeError('Il reste des €')
+            b = False
+            example = None
+            for char in self.file_content:
+                if b:
+                    example = char
+                    break
+                if char == "€":
+                    b = True
+            raise AttributeError('Il reste des €, for instance ' + str(example))
+            
         with open(path, 'w') as file:
             file.write(self.file_content)
             

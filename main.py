@@ -9,12 +9,12 @@ def build_paths(project_name):
     root = os.path.join(ROOT, project_name, 'scenario')
     return tuple([os.path.join(root, "{}{}".format(project_name, tail)) for tail in ["_raw.txt", "_map.json"]] + [root])
 
-def build_scenario(project_name):
+def build_scenario(project_name, translate=False):
     text_path, my_map, root = build_paths(project_name)
     with open(my_map, 'r') as file:
         dico = json.load(file)
     dico = {**dico, **{k.replace('€', '§'):'§'+v for k,v in dico.items() } }
-    document = Document(text_path, project_name, dico=dico)
+    document = Document(text_path, project_name, dico=dico, translate=translate)
     tex_filename = '{}.tex'.format(project_name)
     pdf_filename = '{}.pdf'.format(project_name)
     document.save(tex_filename)
