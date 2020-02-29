@@ -1,9 +1,67 @@
 
 
-from googletrans import Translator
-t = Translator()
+from collections import namedtuple
 
-class Titre:
+Command = namedtuple("Command", ["type", "head", "content"])
+
+
+def type_from_keyword(keyword):
+    if keyword == 'dd':
+        return 'dd'
+    if keyword.startswith('scene'):
+        return 'scene'
+    if keyword.startswith('ellipse'):
+        return 'ellipse'
+    return 'dialogue'
+
+def validate(block):
+    assert len(block.split("\n")) == 2, "Invalid block {}".format(block)
+    assert block.startswith("§"), block
+
+def parse(block):
+    _ = validate(block)
+    head, tail = block.split("\n")
+    return Command(
+            type=type_from_keyword(head[1:]),
+            head=head,
+            content=tail
+        )
+
+def rawify(command):
+    return "\n".join([command.head, command.content])
+    
+
+def latexify(command, dico):
+    
+    if command.type == "dd":
+        return command.content
+        
+    if command.type == "dialogue":
+        locuteur_initiale = command.head[1:]
+        try:
+            locuteur = dico["€" + locuteur_initiale]
+        except KeyError:
+            raise KeyError("Missing character corresponding to initial {}".format(locuteur_initiale))
+        return format_as_latex("speak", arg1=locuteur, arg2=command.content, brackets=False)
+        
+    if command.type == "scene":
+        scene_number = command.head.split("scene")[1]
+        int_ext, day_night, place = command.content.split("|")
+        return format_as_latex(int_ext + "slug", place, day_night, True)
+
+def format_as_latex(command_name, arg1=None, arg2=None, brackets=False):
+    template = "\\{0}{2}{{{1}}}"
+    a1 = arg1 if arg1 else ''
+    a2_template = "[{}]" if brackets else "{{{}}}"
+    a2 = a2_template.format(arg2) if arg2 else ''
+    return template.format(command_name, a1, a2)
+    
+    
+def parse_raw_file(raw_file):
+    return [parse(block) for block in raw_file.split("\n\n")]
+    
+
+def make_latex_file(raw_file):
     debut = """\\documentclass{screenplay}
 \\usepackage[utf8]{inputenc}
 \\title{"""
@@ -23,139 +81,4 @@ class Titre:
 
 \\maketitle
 """
-    def __init__(self, titre):
-        self.titre = titre
-        
-    def rep(self):
-        return self.debut + self.titre + self.fin
-
-class Commande:
-    def __init__(self, nom, argument_principal=None, argument_secondaire=None):
-        self.nom = nom
-        self.argument_principal = argument_principal
-        self.argument_secondaire = argument_secondaire
-    def rep(self):
-        template = "\\{0}{2}{{{1}}}"
-        a1 = self.argument_principal if self.argument_principal else ''
-        a2 = '[{}]'.format(self.argument_secondaire) if self.argument_secondaire else ''
-        return template.format(self.nom, a1, a2)
-        
-class Commande2(Commande):
-    def rep(self):
-        template = "\\{0}{2}{{{1}}}"
-        a1 = self.argument_principal if self.argument_principal else ''
-        a2 = '{{{}}}'.format(self.argument_secondaire) if self.argument_secondaire else ''
-        return template.format(self.nom, a1, a2)
-        
-class Parler(Commande2):
-    def __init__(self, parlant, texte):
-        super().__init__('speak', texte, parlant)
-        
-class Slug(Commande):
-    incr = 1
-    def __init__(self, interieur, lieu, heure):
-        self.number = Slug.incr
-        nom = 'intslug' if interieur else 'extslug'
-        super().__init__(nom, lieu, heure)
-        Slug.incr += 1
-
-    def rep(self):
-        return "{}\n{}".format(
-            "{0:0=3d}".format(self.number),
-            super().rep())
-        
-class Simple():
-    def __init__(self, texte):
-        self.texte = texte
-    def rep(self):
-        return self.texte
-        
-        
-class OCommande:
-    """
-    The originale commande formatted as a string with at least two lines
-    """
-    def __init__(self, string):
-        content = string.split("\n")
-        assert len(content) > 1, "OCommmande instanciated with only one line" + str(content)
-        head = content[0]
-        tail = "\n".join(content[1:])
-        assert head.startswith('§'), "paragraph should start with keyword preceded by §" + head
-        self.keyword = head[1:]
-        self.content = tail
-        if self.type == 'scene':
-            assert len(tail.split('|')) == 3
     
-    @property
-    def type(self):
-        if self.keyword == 'dd':
-            return 'dd'
-        if self.keyword.startswith('scene'):
-            return 'scene'
-        if self.keyword.startswith('ellipse'):
-            return 'ellipse'
-        return 'dialogue'
-        
-    @property
-    def corresponding_new_command(self):
-
-        if self.type == "dialogue":
-            return Parler(parlant=self.keyword, texte=self.content)
-        if self.type == "dd":
-            return Simple(self.content)
-        if self.type == "ellipse":
-            return Simple("Ellipse: %s" % self.content)
-        if self.type == "scene":
-            a,b,c = self.content.split('\n')[0].split('|')
-            int = a == 'int'
-            heure, lieu = b,c
-            return Slug(interieur=int, lieu=lieu, heure=heure)
-            
-    def translate(self):
-        self.content = t.translate(self.content, src="fr", dest="en").text
-            
-        
-
-class Document:
-    def __init__(self, filepath, my_title, dico, translate=False):
-        with open(filepath, 'r') as file:
-            content = file.read()
-            for key, value in dico.items():
-                content = content.replace(key, value)
-            commands_text = [i.strip() for i in content.split('\n\n')]
-            o_commands = [OCommande(ct) for ct in commands_text]
-            if translate:
-                print("Translating...")
-                _ = [i.translate() for i in o_commands]
-                print("Done")
-            new_commands = [Titre(my_title)] + [i.corresponding_new_command for i in o_commands] + [End()]
-            reps = [i.rep() for i in new_commands]
-            self.file_content = '\n\n'.join(reps)
-            
-    def save(self, path):
-        if '€' in self.file_content:
-            b = False
-            example = None
-            for char in self.file_content:
-                if b:
-                    example = char
-                    break
-                if char == "€":
-                    b = True
-            raise AttributeError('Il reste des €, for instance ' + str(example))
-            
-        with open(path, 'w') as file:
-            file.write(self.file_content)
-            
-    def replace(self, dico):
-        for key, value in dico.items():
-            self.file_content = self.file_content.replace(key, value)
-            
-        
-
-
-class End:
-    text = "\\end{document}"
-    def rep(self):
-        return self.text
-
